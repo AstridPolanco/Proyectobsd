@@ -83,3 +83,4 @@ C:\Users\HP BLUE\Desktop\Tareas\proyfinalbsd\ARSAN-FAPI\bin\Debug\net8.0\runtime
 C:\Users\HP BLUE\Desktop\Tareas\proyfinalbsd\ARSAN-FAPI\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
 C:\Users\HP BLUE\Desktop\Tareas\proyfinalbsd\ARSAN-FAPI\bin\Debug\net8.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
 C:\Users\HP BLUE\Desktop\Tareas\proyfinalbsd\ARSAN-FAPI\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\HP BLUE\Desktop\Tareas\proyfinalbsd\ARSAN-FAPI\obj\Debug\net8.0\ARSAN-FAPI.sourcelink.json

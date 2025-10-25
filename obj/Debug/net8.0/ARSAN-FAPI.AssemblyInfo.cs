@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ARSAN-FAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+40638183d7b8d9fda5a708d74cd916f3871b5470")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ac4e6081b080a8c9b1a5457ca07849e92fefd3e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ARSAN-FAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ARSAN-FAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

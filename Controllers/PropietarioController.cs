@@ -7,10 +7,10 @@ namespace ARSAN_FAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TipoTelefonoController : ControllerBase
+    public class PropietarioController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public TipoTelefonoController(IConfiguration config) { _config = config; }
+        public PropietarioController(IConfiguration config) { _config = config; }
         private string Conn => _config.GetConnectionString("DefaultConnection");
 
         [HttpGet("Listar")]
@@ -20,7 +20,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM TipoTelefono", cn);
+                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Propietario", cn);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -35,7 +35,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT * FROM TipoTelefono WHERE TipoTelefonoID = @id", cn);
+                using var cmd = new SqlCommand("SELECT * FROM Propietario WHERE PropietarioID = @id", cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -51,19 +51,20 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_InsertarTipoTelefono"))
+                if (ExistsSP("sp_InsertarPropietario"))
                 {
-                    ExecSP("sp_InsertarTipoTelefono", bodyDict);
-                    return Ok("Insertado (SP) sp_InsertarTipoTelefono");
+                    ExecSP("sp_InsertarPropietario", bodyDict);
+                    return Ok("Insertado (SP) sp_InsertarPropietario");
                 }
 
-                // Fallback directo
-                var sql = "INSERT INTO TipoTelefono(TipoTelefonoID, Descripcion) VALUES(@TipoTelefonoID, @Descripcion)";
+                var sql = "INSERT INTO Propietario(PropietarioID, PersonaID, CasaID, ClusterID) VALUES(@PropietarioID, @PersonaID, @CasaID, @ClusterID)";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-                cmd.Parameters.AddWithValue("@TipoTelefonoID", GetSafeIntValue(bodyDict, "TipoTelefonoID"));
-                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
+                cmd.Parameters.AddWithValue("@GuardiaID", GetSafeIntValue(bodyDict, "PropietarioID"));
+                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
+                cmd.Parameters.AddWithValue("@GuardiaID", GetSafeIntValue(bodyDict, "CasaID"));
+                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "ClusterID"));
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -71,7 +72,7 @@ namespace ARSAN_FAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al crear tipo teléfono: {ex.Message}");
+                return StatusCode(500, $"Error al crear propietario: {ex.Message}");
             }
         }
 
@@ -82,19 +83,18 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_ActualizarTipoTelefono"))
+                if (ExistsSP("sp_ActualizarPropietario"))
                 {
-                    ExecSP("sp_ActualizarTipoTelefono", bodyDict);
-                    return Ok("Actualizado (SP) sp_ActualizarTipoTelefono");
+                    ExecSP("sp_ActualizarPropietario", bodyDict);
+                    return Ok("Actualizado (SP) sp_ActualizarPropietario");
                 }
 
-                // Fallback update
-                var sql = "UPDATE TipoTelefono SET Descripcion = @Descripcion WHERE TipoTelefonoID = @TipoTelefonoID";
+                var sql = "UPDATE Propietario SET PersonaID = @PersonaID WHERE PropietarioID = @PropietarioID";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
-                cmd.Parameters.AddWithValue("@TipoTelefonoID", GetSafeIntValue(bodyDict, "TipoTelefonoID"));
+                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
+                cmd.Parameters.AddWithValue("@GuardiaID", GetSafeIntValue(bodyDict, "GuardiaID"));
 
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
@@ -108,14 +108,8 @@ namespace ARSAN_FAPI.Controllers
         {
             try
             {
-                if (ExistsSP("sp_EliminarTipoTelefonoIR"))
-                {
-                    ExecSP("sp_EliminarTipoTelefonoIR", new Dictionary<string, object> { { "TipoTelefonoID_a_Eliminar", id } });
-                    return Ok("Eliminado (SP) sp_EliminarTipoTelefonoIR");
-                }
-
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("DELETE FROM TipoTelefono WHERE TipoTelefonoID = @id", cn);
+                using var cmd = new SqlCommand("DELETE FROM Propietario WHERE PropietarioID = @id", cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
@@ -124,7 +118,7 @@ namespace ARSAN_FAPI.Controllers
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
 
-        #region Helpers (mismos métodos que en los anteriores)
+        #region Helpers
         private bool ExistsSP(string spName)
         {
             using var cn = new SqlConnection(Conn);

@@ -112,7 +112,6 @@
                 <a class="nav-link active" href="#" data-target="inicio"> <i class="bi bi-house-door"></i> Inicio</a>
                 <a class="nav-link" href="#" data-target="consultasPrincipal"> <i class="bi bi-bar-chart-line"></i> Consultas</a>
                 <a class="nav-link" href="#" data-target="consultas4b"> <i class="bi bi-search"></i> Gestión Entidades</a>
-                <a class="nav-link" href="#" data-target="mantenimientos"> <i class="bi bi-tools"></i> Mantenimientos</a>
             </nav>
             <div style="position:absolute;left:.6rem;bottom:1rem;color:rgba(255,255,255,.8);font-size:.82rem">v1.0 • BD I</div>
         </aside>
@@ -242,17 +241,21 @@
     </div>
 
     <script>
+        // CORREGIR: Definir rutas base según tus controladores
         const API_BASE = location.origin + '/api';
-        // NAV
-        document.querySelectorAll('.sidebar .nav-link').forEach(a => {
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                document.querySelectorAll('.sidebar .nav-link').forEach(x => x.classList.remove('active'));
-                a.classList.add('active');
-                const t = a.getAttribute('data-target');
-                mostrar(t);
-            });
-        });
+        const ENTITIES_WITH_SPECIFIC_CONTROLLERS = [
+            'Departamento', 'Municipio', 'Persona', 'ResidencialDireccion', 'TipoTelefono', 'Cluster', 'Casa', 'GuardiaSeguridad', 'Residencial', 'Telefono', 'Propietario', 'Vehiculo', 'Marca', 'TarjetaIntegracionPagos', 'DetalleRecibo'
+        ];
+
+        // Función auxiliar para determinar qué controlador usar
+        function getEntityControllerConfig(key) {
+            if (ENTITIES_WITH_SPECIFIC_CONTROLLERS.includes(key)) {
+                return { baseUrl: `${API_BASE}/${key}` };
+            } else {
+                return { baseUrl: `${API_BASE}/MantenimientosCRUD` };
+            }
+        }
+
 
         function mostrar(seccion) {
             document.getElementById('inicioSection').style.display = 'none';
@@ -401,12 +404,24 @@
             const cont = document.getElementById(`entidadResult${key}`);
             cont.innerHTML = '<div class="small-muted">Cargando...</div>';
             try {
-                const res = await fetch(`${API_BASE}/${key}/Listar`);
+                const config = getEntityControllerConfig(key);
+                let url;
+
+                if (config.baseUrl.includes('MantenimientosCRUD')) {
+                    // Usar MantenimientosCRUDController
+                    url = `${config.baseUrl}/Consultar/${key}/0`; // 0 para listar todos
+                } else {
+                    // Usar controlador específico
+                    url = `${config.baseUrl}/Listar`;
+                }
+
+                const res = await fetch(url);
                 if (!res.ok) throw new Error(await res.text());
                 const data = await res.json();
                 renderCRUDTable(key, data, cont);
             } catch (err) {
-                cont.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`; console.error(err);
+                cont.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`;
+                console.error(err);
             }
         }
 
@@ -416,23 +431,31 @@
             const cont = document.getElementById(`entidadResult${key}`);
             cont.innerHTML = '<div class="small-muted">Buscando...</div>';
             try {
-                let url = `${API_BASE}/${key}/Listar`;
-                if (id) url = `${API_BASE}/${key}/Get?id=${encodeURIComponent(id)}`;
-                else if (filtro) {
-                    // try server side listing and client filter
-                    const resAll = await fetch(`${API_BASE}/${key}/Listar`);
-                    if (!resAll.ok) throw new Error(await resAll.text());
-                    const all = await resAll.json();
-                    const filtered = all.filter(r => JSON.stringify(r).toLowerCase().includes(filtro.toLowerCase()));
-                    renderCRUDTable(key, filtered, cont);
+                const config = getEntityControllerConfig(key);
+                let url;
+
+                if (id) {
+                    if (config.baseUrl.includes('MantenimientosCRUD')) {
+                        url = `${config.baseUrl}/Consultar/${key}/${id}`;
+                    } else {
+                        url = `${config.baseUrl}/Get?id=${encodeURIComponent(id)}`;
+                    }
+                } else {
+                    // Si no hay ID, hacer búsqueda por filtro en cliente
+                    await fetchList(key);
                     return;
                 }
+
                 const res = await fetch(url);
                 if (!res.ok) throw new Error(await res.text());
                 const data = await res.json();
                 renderCRUDTable(key, data, cont);
-            } catch (err) { cont.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`; console.error(err); }
+            } catch (err) {
+                cont.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`;
+                console.error(err);
+            }
         }
+
 
         function renderCRUDTable(key, data, cont) {
             if (!data || (Array.isArray(data) && data.length === 0)) { cont.innerHTML = '<div class="alert alert-warning">Sin registros.</div>'; return; }
@@ -547,86 +570,295 @@
             }
         }
 
+        // MODIFICAR la función de guardar nuevo registro
+        async function saveNewRecord(key, sample) {
+            let obj = {};
+
+            if (sample) {
+                // Usar formulario generado con conversión de tipos
+                const form = document.getElementById(`formNew${key}`);
+                const formData = new FormData(form);
+
+                for (let [field, value] of formData.entries()) {
+                    // Conversión EXPLÍCITA de tipos
+                    if (value === '') {
+                        obj[field] = null;
+                    } else if (field.toLowerCase().includes('id') || field.toLowerCase().includes('numero')) {
+                        // Campos que probablemente son números
+                        obj[field] = value ? parseInt(value) || value : null;
+                    } else if (!isNaN(value) && value !== '') {
+                        // Si es un número, convertirlo
+                        obj[field] = Number(value);
+                    } else {
+                        obj[field] = value;
+                    }
+                }
+            } else {
+                // Usar JSON directo
+                const raw = document.getElementById(`jsonNew${key}`).value;
+                try {
+                    obj = JSON.parse(raw);
+                } catch (e) {
+                    alert('JSON inválido. Verifique el formato.');
+                    return;
+                }
+            }
+
+            // Validar datos requeridos para Departamento
+            if (key === 'Departamento') {
+                if (!obj.DepartamentoID && obj.DepartamentoID !== 0) {
+                    alert('DepartamentoID es requerido');
+                    return;
+                }
+                if (!obj.Descripcion) {
+                    alert('Descripción es requerida');
+                    return;
+                }
+            }
+
+            try {
+                const config = getEntityControllerConfig(key);
+                let url, method;
+
+                if (config.baseUrl.includes('MantenimientosCRUD')) {
+                    url = `${config.baseUrl}/Insertar/${key}`;
+                    method = 'POST';
+                } else {
+                    url = `${config.baseUrl}/Crear`;
+                    method = 'POST';
+                }
+
+                console.log('Enviando datos:', obj); // Para debug
+
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(errorText || `Error ${res.status}`);
+                }
+
+                const resultText = await res.text();
+                alert(`✅ ${resultText || 'Registro creado exitosamente'}`);
+                document.getElementById(`newCard${key}`).remove();
+                fetchList(key);
+
+            } catch (err) {
+                alert(`❌ Error al crear registro: ${err.message}`);
+                console.error('Error details:', err);
+            }
+        }
+
+        // MODIFICAR la función de editar
         async function editRecord(key, id) {
             if (!id) return alert('ID no disponible');
             try {
-                const res = await fetch(`${API_BASE}/${key}/Get?id=${encodeURIComponent(id)}`);
+                const config = getEntityControllerConfig(key);
+                let url;
+
+                if (config.baseUrl.includes('MantenimientosCRUD')) {
+                    url = `${config.baseUrl}/Consultar/${key}/${id}`;
+                } else {
+                    url = `${config.baseUrl}/Get?id=${encodeURIComponent(id)}`;
+                }
+
+                const res = await fetch(url);
                 if (!res.ok) throw new Error(await res.text());
                 const data = await res.json();
+
+                // Ajustar para el formato de respuesta de MantenimientosCRUD
                 const record = Array.isArray(data) ? data[0] : data;
+                if (!record) throw new Error('Registro no encontrado');
+
                 const panel = document.getElementById('entidadPanel');
                 let html = `<div class="card p-3 mb-3" id="editCard${key}">
             <h6>Editar ${key} - ${id}</h6>
             <form id="formEdit${key}" class="row g-2">`;
+
                 for (const k in record) {
-                    html += `<div class="col-md-6"><label class="form-label small">${k}</label><input name="${k}" class="form-control form-control-sm" value="${record[k] ?? ''}" /></div>`;
+                    const value = record[k] !== null ? record[k] : '';
+                    html += `<div class="col-md-6">
+                <label class="form-label small">${k}</label>
+                <input name="${k}" class="form-control form-control-sm" value="${value}" />
+            </div>`;
                 }
+
                 html += `</form>
             <div class="mt-3">
-              <button class="btn btn-primary btn-sm" id="saveEdit${key}"><i class="bi bi-save"></i> Guardar</button>
-              <button class="btn btn-secondary btn-sm" id="cancelEdit${key}">Cancelar</button>
-            </div></div>`;
+                <button class="btn btn-primary btn-sm" id="saveEdit${key}">
+                    <i class="bi bi-save"></i> Guardar
+                </button>
+                <button class="btn btn-secondary btn-sm" id="cancelEdit${key}">
+                    Cancelar
+                </button>
+            </div>
+        </div>`;
+
                 panel.insertAdjacentHTML('beforeend', html);
-                document.getElementById(`cancelEdit${key}`).addEventListener('click', () => document.getElementById(`editCard${key}`).remove());
+
+                document.getElementById(`cancelEdit${key}`).addEventListener('click', () => {
+                    document.getElementById(`editCard${key}`).remove();
+                });
+
                 document.getElementById(`saveEdit${key}`).addEventListener('click', async (ev) => {
                     ev.preventDefault();
-                    const inputs = document.getElementById(`formEdit${key}`).querySelectorAll('input');
-                    const obj = {};
-                    inputs.forEach(i => obj[i.name] = i.value === '' ? null : i.value);
-                    try {
-                        const resp = await fetch(`${API_BASE}/${key}/Actualizar`, {
-                            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj)
-                        });
-                        if (!resp.ok) throw new Error(await resp.text());
-                        alert(await resp.text());
-                        document.getElementById(`editCard${key}`).remove();
-                        fetchList(key);
-                    } catch (er) { alert('Error: ' + er.message); console.error(er); }
+                    await saveEditRecord(key, id);
                 });
-            } catch (err) { alert('Error: ' + err.message); console.error(err); }
+
+            } catch (err) {
+                alert('Error: ' + err.message);
+                console.error(err);
+            }
         }
 
+        // NUEVA función para guardar edición
+        async function saveEditRecord(key, id) {
+            const inputs = document.getElementById(`formEdit${key}`).querySelectorAll('input');
+            const obj = {};
+
+            inputs.forEach(i => {
+                if (i.value === '') {
+                    obj[i.name] = null;
+                } else if (!isNaN(i.value) && i.value !== '') {
+                    obj[i.name] = Number(i.value);
+                } else {
+                    obj[i.name] = i.value;
+                }
+            });
+
+            try {
+                const config = getEntityControllerConfig(key);
+                let url, method;
+
+                if (config.baseUrl.includes('MantenimientosCRUD')) {
+                    url = `${config.baseUrl}/Actualizar/${key}`;
+                    method = 'PUT';
+                } else {
+                    url = `${config.baseUrl}/Actualizar`;
+                    method = 'PUT';
+                }
+
+                const resp = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                });
+
+                if (!resp.ok) {
+                    const errorText = await resp.text();
+                    throw new Error(errorText || `Error ${resp.status}`);
+                }
+
+                const resultText = await resp.text();
+                alert(`✅ ${resultText || 'Registro actualizado exitosamente'}`);
+                document.getElementById(`editCard${key}`).remove();
+                fetchList(key);
+
+            } catch (err) {
+                alert('Error: ' + err.message);
+                console.error(err);
+            }
+        }
+
+        // MODIFICAR la función de eliminar
         async function deleteRecord(key, id) {
             if (!id) return alert('ID no disponible');
-            if (!confirm('¿Eliminar registro?')) return;
+            if (!confirm('¿Está seguro de eliminar este registro?')) return;
+
             try {
-                const res = await fetch(`${API_BASE}/${key}/Eliminar?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
-                if (!res.ok) throw new Error(await res.text());
-                alert(await res.text());
+                const config = getEntityControllerConfig(key);
+                let url;
+
+                if (config.baseUrl.includes('MantenimientosCRUD')) {
+                    url = `${config.baseUrl}/Eliminar/${key}/${id}`;
+                } else {
+                    url = `${config.baseUrl}/Eliminar?id=${encodeURIComponent(id)}`;
+                }
+
+                const res = await fetch(url, {
+                    method: 'DELETE'
+                });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(errorText || `Error ${res.status}`);
+                }
+
+                const resultText = await res.text();
+                alert(`✅ ${resultText || 'Registro eliminado exitosamente'}`);
                 fetchList(key);
-            } catch (err) { alert('Error: ' + err.message); console.error(err); }
+
+            } catch (err) {
+                alert('Error: ' + err.message);
+                console.error(err);
+            }
         }
 
         /* ========== MANTENIMIENTOS centrales (igual que antes) ========== */
+        /* ========== MANTENIMIENTOS centrales ========== */
         document.getElementById('mantenimientoSelect').addEventListener('change', e => {
             const val = e.target.value;
-            const cont = document.getElementById('mantenimientoParams'); cont.innerHTML = '';
+            const cont = document.getElementById('mantenimientoParams');
+            cont.innerHTML = '';
             if (!val) return;
+
             const knownParams = {
-                sp_InsertarPersona: ['PersonaID', 'PrimerNombre', 'SegundoNombre', 'PrimerApellido', 'SegundoApellido', 'FechaNacimiento', 'CUI', 'NIT', 'Genero', 'EstadoCivil', 'TipoLicenciaID'],
-                sp_InsertarCasa: ['ClusterID', 'CasaID', 'NumeroCasa'],
-                sp_InsertarCluster: ['ClusterID', 'NombreCluster', 'ResidencialID'],
-                sp_InsertarGuardiaSeguridad: ['GuardiaID', 'PersonaID'],
-                sp_EliminarPersonaIR: ['PersonaID_a_Eliminar']
+                'sp_InsertarPersona': ['PersonaID', 'PrimerNombre', 'SegundoNombre', 'PrimerApellido', 'SegundoApellido', 'FechaNacimiento', 'CUI', 'NIT', 'Genero', 'EstadoCivil'],
+                'sp_InsertarCasa': ['ClusterID', 'CasaID', 'NumeroCasa'],
+                'sp_InsertarCluster': ['ClusterID', 'NombreCluster', 'ResidencialID'],
+                'sp_InsertarGuardiaSeguridad': ['GuardiaID', 'PersonaID'],
+                'sp_EliminarPersonaIR': ['PersonaID_a_Eliminar']
             };
+
             const params = knownParams[val] || [];
-            params.forEach(p => { const type = p.toLowerCase().includes('fecha') ? 'date' : 'text'; cont.innerHTML += `<div class="mb-2"><label class="form-label small">${p}</label><input id="mant_${p}" class="form-control form-control-sm" type="${type}"/></div>`; });
+            params.forEach(p => {
+                const type = p.toLowerCase().includes('fecha') ? 'date' : 'text';
+                cont.innerHTML += `
+            <div class="mb-2">
+                <label class="form-label small">${p}</label>
+                <input id="mant_${p}" class="form-control form-control-sm" type="${type}"/>
+            </div>
+        `;
+            });
         });
 
         document.getElementById('btnEjecutarMant').addEventListener('click', async () => {
             const sp = document.getElementById('mantenimientoSelect').value;
             if (!sp) return alert('Selecciona acción');
+
             const inputs = Array.from(document.querySelectorAll('#mantenimientoParams input'));
             const payload = {};
-            inputs.forEach(i => payload[i.id.replace('mant_', '')] = i.value || null);
+            inputs.forEach(i => {
+                const key = i.id.replace('mant_', '');
+                payload[key] = i.value || null;
+            });
+
             try {
-                const res = await fetch(`${API_BASE}/Mantenimientos/Exec/${sp}`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+                // Usar Mantenimientos1y2Controller que tienes configurado
+                const res = await fetch(`${API_BASE}/Mantenimientos1y2/${sp}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(errorText || `Error ${res.status}`);
+                }
+
                 const txt = await res.text();
-                document.getElementById('mantenimientoResultado').innerHTML = `<div class="alert alert-success">${txt}</div>`;
+                document.getElementById('mantenimientoResultado').innerHTML =
+                    `<div class="alert alert-success">${txt}</div>`;
             } catch (err) {
-                document.getElementById('mantenimientoResultado').innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`;
+                document.getElementById('mantenimientoResultado').innerHTML =
+                    `<div class="alert alert-danger">Error: ${err.message}</div>`;
                 console.error(err);
             }
         });
@@ -647,6 +879,19 @@
 
         // init
         document.getElementById('consultaPrincipalSelect').dispatchEvent(new Event('change'));
+        // --- Navegación lateral funcional ---
+        document.querySelectorAll(".sidebar .nav-link").forEach(link => {
+            link.addEventListener("click", e => {
+                e.preventDefault();
+                // quitar clase activa
+                document.querySelectorAll(".sidebar .nav-link").forEach(l => l.classList.remove("active"));
+                link.classList.add("active");
+                // obtener la sección destino
+                const target = link.getAttribute("data-target");
+                mostrar(target);
+            });
+        });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

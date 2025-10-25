@@ -7,10 +7,10 @@ namespace ARSAN_FAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TipoTelefonoController : ControllerBase
+    public class CasaController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public TipoTelefonoController(IConfiguration config) { _config = config; }
+        public CasaController(IConfiguration config) { _config = config; }
         private string Conn => _config.GetConnectionString("DefaultConnection");
 
         [HttpGet("Listar")]
@@ -20,7 +20,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM TipoTelefono", cn);
+                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Casa", cn);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -29,14 +29,15 @@ namespace ARSAN_FAPI.Controllers
         }
 
         [HttpGet("Get")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, int clusterId)
         {
             try
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT * FROM TipoTelefono WHERE TipoTelefonoID = @id", cn);
+                using var cmd = new SqlCommand("SELECT * FROM Casa WHERE CasaID = @id AND ClusterID = @clusterId", cn);
                 cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@clusterId", clusterId);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -51,19 +52,19 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_InsertarTipoTelefono"))
+                if (ExistsSP("sp_InsertarCasa"))
                 {
-                    ExecSP("sp_InsertarTipoTelefono", bodyDict);
-                    return Ok("Insertado (SP) sp_InsertarTipoTelefono");
+                    ExecSP("sp_InsertarCasa", bodyDict);
+                    return Ok("Insertado (SP) sp_InsertarCasa");
                 }
 
-                // Fallback directo
-                var sql = "INSERT INTO TipoTelefono(TipoTelefonoID, Descripcion) VALUES(@TipoTelefonoID, @Descripcion)";
+                var sql = "INSERT INTO Casa(ClusterID, CasaID, NumeroCasa) VALUES(@ClusterID, @CasaID, @NumeroCasa)";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-                cmd.Parameters.AddWithValue("@TipoTelefonoID", GetSafeIntValue(bodyDict, "TipoTelefonoID"));
-                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
+                cmd.Parameters.AddWithValue("@ClusterID", GetSafeIntValue(bodyDict, "ClusterID"));
+                cmd.Parameters.AddWithValue("@CasaID", GetSafeIntValue(bodyDict, "CasaID"));
+                cmd.Parameters.AddWithValue("@NumeroCasa", GetSafeIntValue(bodyDict, "NumeroCasa"));
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -71,7 +72,7 @@ namespace ARSAN_FAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al crear tipo teléfono: {ex.Message}");
+                return StatusCode(500, $"Error al crear casa: {ex.Message}");
             }
         }
 
@@ -82,19 +83,19 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_ActualizarTipoTelefono"))
+                if (ExistsSP("sp_ActualizarCasa"))
                 {
-                    ExecSP("sp_ActualizarTipoTelefono", bodyDict);
-                    return Ok("Actualizado (SP) sp_ActualizarTipoTelefono");
+                    ExecSP("sp_ActualizarCasa", bodyDict);
+                    return Ok("Actualizado (SP) sp_ActualizarCasa");
                 }
 
-                // Fallback update
-                var sql = "UPDATE TipoTelefono SET Descripcion = @Descripcion WHERE TipoTelefonoID = @TipoTelefonoID";
+                var sql = "UPDATE Casa SET NumeroCasa = @NumeroCasa WHERE CasaID = @CasaID AND ClusterID = @ClusterID";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
-                cmd.Parameters.AddWithValue("@TipoTelefonoID", GetSafeIntValue(bodyDict, "TipoTelefonoID"));
+                cmd.Parameters.AddWithValue("@NumeroCasa", GetSafeIntValue(bodyDict, "NumeroCasa"));
+                cmd.Parameters.AddWithValue("@CasaID", GetSafeIntValue(bodyDict, "CasaID"));
+                cmd.Parameters.AddWithValue("@ClusterID", GetSafeIntValue(bodyDict, "ClusterID"));
 
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
@@ -104,19 +105,14 @@ namespace ARSAN_FAPI.Controllers
         }
 
         [HttpDelete("Eliminar")]
-        public IActionResult Eliminar([FromQuery] int id)
+        public IActionResult Eliminar([FromQuery] int id, [FromQuery] int clusterId)
         {
             try
             {
-                if (ExistsSP("sp_EliminarTipoTelefonoIR"))
-                {
-                    ExecSP("sp_EliminarTipoTelefonoIR", new Dictionary<string, object> { { "TipoTelefonoID_a_Eliminar", id } });
-                    return Ok("Eliminado (SP) sp_EliminarTipoTelefonoIR");
-                }
-
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("DELETE FROM TipoTelefono WHERE TipoTelefonoID = @id", cn);
+                using var cmd = new SqlCommand("DELETE FROM Casa WHERE CasaID = @id AND ClusterID = @clusterId", cn);
                 cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@clusterId", clusterId);
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
                 return Ok($"Eliminado ({rows} filas)");
@@ -124,7 +120,7 @@ namespace ARSAN_FAPI.Controllers
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
 
-        #region Helpers (mismos métodos que en los anteriores)
+        #region Helpers
         private bool ExistsSP(string spName)
         {
             using var cn = new SqlConnection(Conn);

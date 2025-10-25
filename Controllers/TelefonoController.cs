@@ -7,10 +7,10 @@ namespace ARSAN_FAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TipoTelefonoController : ControllerBase
+    public class TelefonoController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public TipoTelefonoController(IConfiguration config) { _config = config; }
+        public TelefonoController(IConfiguration config) { _config = config; }
         private string Conn => _config.GetConnectionString("DefaultConnection");
 
         [HttpGet("Listar")]
@@ -20,7 +20,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM TipoTelefono", cn);
+                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Telefono", cn);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -29,14 +29,15 @@ namespace ARSAN_FAPI.Controllers
         }
 
         [HttpGet("Get")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, int personaId)
         {
             try
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT * FROM TipoTelefono WHERE TipoTelefonoID = @id", cn);
+                using var cmd = new SqlCommand("SELECT * FROM Telefono WHERE TelefonoID = @id AND PersonaID = @personaId", cn);
                 cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@personaId", personaId);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -51,19 +52,20 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_InsertarTipoTelefono"))
+                if (ExistsSP("sp_InsertarTelefono"))
                 {
-                    ExecSP("sp_InsertarTipoTelefono", bodyDict);
-                    return Ok("Insertado (SP) sp_InsertarTipoTelefono");
+                    ExecSP("sp_InsertarTelefono", bodyDict);
+                    return Ok("Insertado (SP) sp_InsertarTelefono");
                 }
 
-                // Fallback directo
-                var sql = "INSERT INTO TipoTelefono(TipoTelefonoID, Descripcion) VALUES(@TipoTelefonoID, @Descripcion)";
+                var sql = "INSERT INTO Telefono(TelefonoID, PersonaID, Numero, TipoTelefonoID) VALUES(@TelefonoID, @PersonaID, @Numero, @TipoTelefonoID)";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
+                cmd.Parameters.AddWithValue("@TelefonoID", GetSafeIntValue(bodyDict, "TelefonoID"));
+                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
+                cmd.Parameters.AddWithValue("@Numero", GetSafeStringValue(bodyDict, "Numero"));
                 cmd.Parameters.AddWithValue("@TipoTelefonoID", GetSafeIntValue(bodyDict, "TipoTelefonoID"));
-                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -71,7 +73,7 @@ namespace ARSAN_FAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al crear tipo teléfono: {ex.Message}");
+                return StatusCode(500, $"Error al crear teléfono: {ex.Message}");
             }
         }
 
@@ -82,19 +84,20 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_ActualizarTipoTelefono"))
+                if (ExistsSP("sp_ActualizarTelefono"))
                 {
-                    ExecSP("sp_ActualizarTipoTelefono", bodyDict);
-                    return Ok("Actualizado (SP) sp_ActualizarTipoTelefono");
+                    ExecSP("sp_ActualizarTelefono", bodyDict);
+                    return Ok("Actualizado (SP) sp_ActualizarTelefono");
                 }
 
-                // Fallback update
-                var sql = "UPDATE TipoTelefono SET Descripcion = @Descripcion WHERE TipoTelefonoID = @TipoTelefonoID";
+                var sql = "UPDATE Telefono SET Numero = @Numero, TipoTelefonoID = @TipoTelefonoID WHERE TelefonoID = @TelefonoID AND PersonaID = @PersonaID";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
+                cmd.Parameters.AddWithValue("@Numero", GetSafeStringValue(bodyDict, "Numero"));
                 cmd.Parameters.AddWithValue("@TipoTelefonoID", GetSafeIntValue(bodyDict, "TipoTelefonoID"));
+                cmd.Parameters.AddWithValue("@TelefonoID", GetSafeIntValue(bodyDict, "TelefonoID"));
+                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
 
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
@@ -104,19 +107,14 @@ namespace ARSAN_FAPI.Controllers
         }
 
         [HttpDelete("Eliminar")]
-        public IActionResult Eliminar([FromQuery] int id)
+        public IActionResult Eliminar([FromQuery] int id, [FromQuery] int personaId)
         {
             try
             {
-                if (ExistsSP("sp_EliminarTipoTelefonoIR"))
-                {
-                    ExecSP("sp_EliminarTipoTelefonoIR", new Dictionary<string, object> { { "TipoTelefonoID_a_Eliminar", id } });
-                    return Ok("Eliminado (SP) sp_EliminarTipoTelefonoIR");
-                }
-
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("DELETE FROM TipoTelefono WHERE TipoTelefonoID = @id", cn);
+                using var cmd = new SqlCommand("DELETE FROM Telefono WHERE TelefonoID = @id AND PersonaID = @personaId", cn);
                 cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@personaId", personaId);
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
                 return Ok($"Eliminado ({rows} filas)");
@@ -124,7 +122,7 @@ namespace ARSAN_FAPI.Controllers
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
 
-        #region Helpers (mismos métodos que en los anteriores)
+        #region Helpers
         private bool ExistsSP(string spName)
         {
             using var cn = new SqlConnection(Conn);

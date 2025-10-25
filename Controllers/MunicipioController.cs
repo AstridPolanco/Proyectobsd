@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Text.Json;
 
 namespace ARSAN_FAPI.Controllers
 {
@@ -20,7 +21,8 @@ namespace ARSAN_FAPI.Controllers
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Municipio", cn);
-                using var da = new SqlDataAdapter(cmd); da.Fill(dt);
+                using var da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
                 return Ok(DataTableToList(dt));
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
@@ -33,46 +35,76 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT * FROM Municipio WHERE MunicipioID = @id" + (deptoId.HasValue ? " AND DepartamentoID = @dep" : ""), cn);
+                var sql = "SELECT * FROM Municipio WHERE MunicipioID = @id";
+                if (deptoId.HasValue) sql += " AND DepartamentoID = @dep";
+
+                using var cmd = new SqlCommand(sql, cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 if (deptoId.HasValue) cmd.Parameters.AddWithValue("@dep", deptoId.Value);
-                using var da = new SqlDataAdapter(cmd); da.Fill(dt);
+
+                using var da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
                 return Ok(DataTableToList(dt));
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
 
         [HttpPost("Crear")]
-        public IActionResult Crear([FromBody] Dictionary<string, object> body)
+        public IActionResult Crear([FromBody] JsonElement body)
         {
             try
             {
-                if (ExistsSP("sp_InsertarMunicipio")) { ExecSP("sp_InsertarMunicipio", body); return Ok("Insertado (SP)"); }
-                var sql = "INSERT INTO Municipio(MunicipioID, Descripcion, DepartamentoID) VALUES(@MunicipioID,@Descripcion,@DepartamentoID)";
+                var bodyDict = JsonElementToDictionary(body);
+
+                if (ExistsSP("sp_InsertarMunicipio"))
+                {
+                    ExecSP("sp_InsertarMunicipio", bodyDict);
+                    return Ok("Insertado (SP) sp_InsertarMunicipio");
+                }
+
+                // Fallback directo
+                var sql = "INSERT INTO Municipio(MunicipioID, Descripcion, DepartamentoID) VALUES(@MunicipioID, @Descripcion, @DepartamentoID)";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.AddWithValue("@MunicipioID", body["MunicipioID"] ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Descripcion", body["Descripcion"] ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@DepartamentoID", body["DepartamentoID"] ?? DBNull.Value);
-                cn.Open(); cmd.ExecuteNonQuery();
+
+                cmd.Parameters.AddWithValue("@MunicipioID", GetSafeIntValue(bodyDict, "MunicipioID"));
+                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
+                cmd.Parameters.AddWithValue("@DepartamentoID", GetSafeIntValue(bodyDict, "DepartamentoID"));
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
                 return Ok("Insertado (directo)");
             }
-            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al crear municipio: {ex.Message}");
+            }
         }
 
         [HttpPut("Actualizar")]
-        public IActionResult Actualizar([FromBody] Dictionary<string, object> body)
+        public IActionResult Actualizar([FromBody] JsonElement body)
         {
             try
             {
-                if (ExistsSP("sp_ActualizarMunicipio")) { ExecSP("sp_ActualizarMunicipio", body); return Ok("Actualizado (SP)"); }
-                var sql = "UPDATE Municipio SET Descripcion=@Descripcion WHERE MunicipioID=@MunicipioID AND DepartamentoID=@DepartamentoID";
+                var bodyDict = JsonElementToDictionary(body);
+
+                if (ExistsSP("sp_ActualizarMunicipio"))
+                {
+                    ExecSP("sp_ActualizarMunicipio", bodyDict);
+                    return Ok("Actualizado (SP) sp_ActualizarMunicipio");
+                }
+
+                // Fallback update
+                var sql = "UPDATE Municipio SET Descripcion = @Descripcion WHERE MunicipioID = @MunicipioID AND DepartamentoID = @DepartamentoID";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.AddWithValue("@Descripcion", body["Descripcion"] ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@MunicipioID", body["MunicipioID"]);
-                cmd.Parameters.AddWithValue("@DepartamentoID", body["DepartamentoID"]);
-                cn.Open(); var rows = cmd.ExecuteNonQuery();
+
+                cmd.Parameters.AddWithValue("@Descripcion", GetSafeStringValue(bodyDict, "Descripcion"));
+                cmd.Parameters.AddWithValue("@MunicipioID", GetSafeIntValue(bodyDict, "MunicipioID"));
+                cmd.Parameters.AddWithValue("@DepartamentoID", GetSafeIntValue(bodyDict, "DepartamentoID"));
+
+                cn.Open();
+                var rows = cmd.ExecuteNonQuery();
                 return Ok($"Actualizado ({rows} filas)");
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
@@ -88,41 +120,141 @@ namespace ARSAN_FAPI.Controllers
                     ExecSP("sp_EliminarMunicipioIR", new Dictionary<string, object> { { "MunicipioID_a_Eliminar", id } });
                     return Ok("Eliminado (SP) sp_EliminarMunicipioIR");
                 }
+
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("DELETE FROM Municipio WHERE MunicipioID=@id" + (departamentoId.HasValue ? " AND DepartamentoID=@dep" : ""), cn);
+                var sql = "DELETE FROM Municipio WHERE MunicipioID = @id";
+                if (departamentoId.HasValue) sql += " AND DepartamentoID = @dep";
+
+                using var cmd = new SqlCommand(sql, cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 if (departamentoId.HasValue) cmd.Parameters.AddWithValue("@dep", departamentoId.Value);
-                cn.Open(); var rows = cmd.ExecuteNonQuery();
+
+                cn.Open();
+                var rows = cmd.ExecuteNonQuery();
                 return Ok($"Eliminado ({rows} filas)");
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
 
-        #region helpers (same as Departamento)
+        #region Helpers
         private bool ExistsSP(string spName)
         {
             using var cn = new SqlConnection(Conn);
             using var cmd = new SqlCommand("SELECT COUNT(*) FROM sys.procedures WHERE name = @name", cn);
             cmd.Parameters.AddWithValue("@name", spName);
-            cn.Open(); return ((int)cmd.ExecuteScalar()) > 0;
+            cn.Open();
+            return ((int)cmd.ExecuteScalar()) > 0;
         }
+
         private void ExecSP(string spName, IDictionary<string, object> pars)
         {
             using var cn = new SqlConnection(Conn);
             using var cmd = new SqlCommand(spName, cn) { CommandType = CommandType.StoredProcedure };
-            foreach (var kv in pars) cmd.Parameters.AddWithValue("@" + kv.Key, kv.Value ?? DBNull.Value);
-            cn.Open(); cmd.ExecuteNonQuery();
+            foreach (var kv in pars)
+            {
+                var safeValue = GetSafeParameterValue(kv.Value);
+                cmd.Parameters.AddWithValue("@" + kv.Key, safeValue);
+            }
+            cn.Open();
+            cmd.ExecuteNonQuery();
         }
+
         private List<Dictionary<string, object>> DataTableToList(DataTable table)
         {
             var list = new List<Dictionary<string, object>>();
             foreach (DataRow row in table.Rows)
             {
                 var d = new Dictionary<string, object>();
-                foreach (DataColumn col in table.Columns) d[col.ColumnName] = row[col] == DBNull.Value ? null : row[col];
+                foreach (DataColumn col in table.Columns)
+                    d[col.ColumnName] = row[col] == DBNull.Value ? null : row[col];
                 list.Add(d);
             }
             return list;
+        }
+
+        private Dictionary<string, object> JsonElementToDictionary(JsonElement element)
+        {
+            var dict = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                object value;
+                switch (property.Value.ValueKind)
+                {
+                    case JsonValueKind.String:
+                        value = property.Value.GetString();
+                        break;
+                    case JsonValueKind.Number:
+                        if (property.Value.TryGetInt32(out int intVal))
+                            value = intVal;
+                        else if (property.Value.TryGetDecimal(out decimal decimalVal))
+                            value = decimalVal;
+                        else
+                            value = property.Value.GetDouble();
+                        break;
+                    case JsonValueKind.True:
+                        value = true;
+                        break;
+                    case JsonValueKind.False:
+                        value = false;
+                        break;
+                    case JsonValueKind.Null:
+                        value = null;
+                        break;
+                    default:
+                        value = property.Value.ToString();
+                        break;
+                }
+                dict[property.Name] = value;
+            }
+            return dict;
+        }
+
+        private object GetSafeParameterValue(object value)
+        {
+            if (value == null) return DBNull.Value;
+
+            if (value is JsonElement element)
+            {
+                switch (element.ValueKind)
+                {
+                    case JsonValueKind.String:
+                        return element.GetString() ?? (object)DBNull.Value;
+                    case JsonValueKind.Number:
+                        if (element.TryGetInt32(out int intVal))
+                            return intVal;
+                        if (element.TryGetDecimal(out decimal decimalVal))
+                            return decimalVal;
+                        return element.GetDouble();
+                    case JsonValueKind.True:
+                        return true;
+                    case JsonValueKind.False:
+                        return false;
+                    case JsonValueKind.Null:
+                        return DBNull.Value;
+                    default:
+                        return element.ToString() ?? (object)DBNull.Value;
+                }
+            }
+
+            return value ?? DBNull.Value;
+        }
+
+        private object GetSafeIntValue(Dictionary<string, object> dict, string key)
+        {
+            if (dict.ContainsKey(key) && dict[key] != null)
+            {
+                if (dict[key] is int intVal) return intVal;
+                if (dict[key] is long longVal) return (int)longVal;
+                if (int.TryParse(dict[key].ToString(), out int parsedVal)) return parsedVal;
+            }
+            return DBNull.Value;
+        }
+
+        private object GetSafeStringValue(Dictionary<string, object> dict, string key)
+        {
+            if (dict.ContainsKey(key) && dict[key] != null)
+                return dict[key].ToString() ?? (object)DBNull.Value;
+            return DBNull.Value;
         }
         #endregion
     }

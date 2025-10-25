@@ -21,6 +21,164 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ARSAN_FAPI.Controllers.CasaController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Casa/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.CasaController",
+    "Method": "Crear",
+    "RelativePath": "api/Casa/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.CasaController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Casa/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "clusterId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.CasaController",
+    "Method": "Get",
+    "RelativePath": "api/Casa/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "clusterId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.CasaController",
+    "Method": "Listar",
+    "RelativePath": "api/Casa/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ClusterController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Cluster/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ClusterController",
+    "Method": "Crear",
+    "RelativePath": "api/Cluster/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ClusterController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Cluster/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ClusterController",
+    "Method": "Get",
+    "RelativePath": "api/Cluster/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ClusterController",
+    "Method": "Listar",
+    "RelativePath": "api/Cluster/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ARSAN_FAPI.Controllers.DepartamentoController",
     "Method": "Actualizar",
     "RelativePath": "api/Departamento/Actualizar",
@@ -30,7 +188,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -46,7 +204,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -88,6 +246,228 @@
     "ContainingType": "ARSAN_FAPI.Controllers.DepartamentoController",
     "Method": "Listar",
     "RelativePath": "api/Departamento/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.DetalleReciboController",
+    "Method": "Actualizar",
+    "RelativePath": "api/DetalleRecibo/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.DetalleReciboController",
+    "Method": "Crear",
+    "RelativePath": "api/DetalleRecibo/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.DetalleReciboController",
+    "Method": "Eliminar",
+    "RelativePath": "api/DetalleRecibo/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.DetalleReciboController",
+    "Method": "Get",
+    "RelativePath": "api/DetalleRecibo/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.DetalleReciboController",
+    "Method": "Listar",
+    "RelativePath": "api/DetalleRecibo/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.GuardiaSeguridadController",
+    "Method": "Actualizar",
+    "RelativePath": "api/GuardiaSeguridad/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.GuardiaSeguridadController",
+    "Method": "Crear",
+    "RelativePath": "api/GuardiaSeguridad/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.GuardiaSeguridadController",
+    "Method": "Eliminar",
+    "RelativePath": "api/GuardiaSeguridad/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.GuardiaSeguridadController",
+    "Method": "Get",
+    "RelativePath": "api/GuardiaSeguridad/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.GuardiaSeguridadController",
+    "Method": "Listar",
+    "RelativePath": "api/GuardiaSeguridad/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.InquilinoController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Inquilino/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.InquilinoController",
+    "Method": "Crear",
+    "RelativePath": "api/Inquilino/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.InquilinoController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Inquilino/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.InquilinoController",
+    "Method": "Get",
+    "RelativePath": "api/Inquilino/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.InquilinoController",
+    "Method": "Listar",
+    "RelativePath": "api/Inquilino/Listar",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -295,6 +675,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ARSAN_FAPI.Controllers.MarcaController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Marca/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.MarcaController",
+    "Method": "Crear",
+    "RelativePath": "api/Marca/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.MarcaController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Marca/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.MarcaController",
+    "Method": "Get",
+    "RelativePath": "api/Marca/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.MarcaController",
+    "Method": "Listar",
+    "RelativePath": "api/Marca/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ARSAN_FAPI.Controllers.MunicipioController",
     "Method": "Actualizar",
     "RelativePath": "api/Municipio/Actualizar",
@@ -304,7 +758,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -320,7 +774,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -388,7 +842,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -404,7 +858,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -474,6 +928,154 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ARSAN_FAPI.Controllers.PropietarioController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Propietario/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.PropietarioController",
+    "Method": "Crear",
+    "RelativePath": "api/Propietario/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.PropietarioController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Propietario/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.PropietarioController",
+    "Method": "Get",
+    "RelativePath": "api/Propietario/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.PropietarioController",
+    "Method": "Listar",
+    "RelativePath": "api/Propietario/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ResidencialController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Residencial/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ResidencialController",
+    "Method": "Crear",
+    "RelativePath": "api/Residencial/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ResidencialController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Residencial/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ResidencialController",
+    "Method": "Get",
+    "RelativePath": "api/Residencial/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.ResidencialController",
+    "Method": "Listar",
+    "RelativePath": "api/Residencial/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ARSAN_FAPI.Controllers.ResidencialDireccionController",
     "Method": "Actualizar",
     "RelativePath": "api/ResidencialDireccion/Actualizar",
@@ -483,7 +1085,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -499,7 +1101,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -558,6 +1160,164 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ARSAN_FAPI.Controllers.TarjetaIntegracionPagosController",
+    "Method": "Actualizar",
+    "RelativePath": "api/TarjetaIntegracionPagos/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "b",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TarjetaIntegracionPagosController",
+    "Method": "Crear",
+    "RelativePath": "api/TarjetaIntegracionPagos/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "b",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TarjetaIntegracionPagosController",
+    "Method": "Eliminar",
+    "RelativePath": "api/TarjetaIntegracionPagos/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TarjetaIntegracionPagosController",
+    "Method": "Get",
+    "RelativePath": "api/TarjetaIntegracionPagos/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TarjetaIntegracionPagosController",
+    "Method": "Listar",
+    "RelativePath": "api/TarjetaIntegracionPagos/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TelefonoController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Telefono/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TelefonoController",
+    "Method": "Crear",
+    "RelativePath": "api/Telefono/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TelefonoController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Telefono/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "personaId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TelefonoController",
+    "Method": "Get",
+    "RelativePath": "api/Telefono/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "personaId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.TelefonoController",
+    "Method": "Listar",
+    "RelativePath": "api/Telefono/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ARSAN_FAPI.Controllers.TipoTelefonoController",
     "Method": "Actualizar",
     "RelativePath": "api/TipoTelefono/Actualizar",
@@ -567,7 +1327,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -583,7 +1343,7 @@
     "Parameters": [
       {
         "Name": "body",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Object, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
@@ -625,6 +1385,80 @@
     "ContainingType": "ARSAN_FAPI.Controllers.TipoTelefonoController",
     "Method": "Listar",
     "RelativePath": "api/TipoTelefono/Listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.VehiculoController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Vehiculo/Actualizar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.VehiculoController",
+    "Method": "Crear",
+    "RelativePath": "api/Vehiculo/Crear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.VehiculoController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Vehiculo/Eliminar",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.VehiculoController",
+    "Method": "Get",
+    "RelativePath": "api/Vehiculo/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ARSAN_FAPI.Controllers.VehiculoController",
+    "Method": "Listar",
+    "RelativePath": "api/Vehiculo/Listar",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

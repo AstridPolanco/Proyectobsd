@@ -7,10 +7,10 @@ namespace ARSAN_FAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class InquilinoController : ControllerBase
+    public class RondinController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public InquilinoController(IConfiguration config) { _config = config; }
+        public RondinController(IConfiguration config) { _config = config; }
         private string Conn => _config.GetConnectionString("DefaultConnection");
 
         [HttpGet("Listar")]
@@ -20,7 +20,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Inquilino", cn);
+                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Rondin", cn);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -35,7 +35,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT * FROM Inquilino WHERE InquilinoID = @id", cn);
+                using var cmd = new SqlCommand("SELECT * FROM Rondin WHERE RondinID = @id", cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -51,21 +51,25 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_InsertarInquilino"))
+                if (ExistsSP("sp_InsertarRondin"))
                 {
-                    ExecSP("sp_InsertarInquilino", bodyDict);
-                    return Ok("Insertado (SP) sp_InsertarInquilino");
+                    ExecSP("sp_InsertarRondin", bodyDict);
+                    return Ok("Insertado (SP) sp_InsertarRondin");
                 }
 
-                var sql = "INSERT INTO Inquilino(InquilinoID, PersonaID, CasaID, ClusterID) VALUES(@InquilinoID, @PersonaID, @CasaID, @ClusterID)";
+                var sql = "INSERT INTO Rondin(RondinID, FechaRondin,EstadoTurno, Observaciones, GaritaID, TurnoID, PersonaID) VALUES(@RondinID, @FechaRondin, @EstadoTurno, @Observaciones, @GaritaID, @TurnoID, @PersonaID)";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-        
+                cmd.Parameters.AddWithValue("@RondinID", GetSafeIntValue(bodyDict, "RondinID"));
+                cmd.Parameters.AddWithValue("@FechaRondin", GetSafeIntValue(bodyDict, "FechaRondin"));
+                cmd.Parameters.AddWithValue("@EstadoTurno", GetSafeIntValue(bodyDict, "EstadoTurno"));
+                cmd.Parameters.AddWithValue("@Observaciones", GetSafeIntValue(bodyDict, "Observaciones"));
+                cmd.Parameters.AddWithValue("@GaritaID", GetSafeIntValue(bodyDict, "GaritaID"));
+                cmd.Parameters.AddWithValue("@TurnoID", GetSafeIntValue(bodyDict, "TurnoID"));
                 cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
-                cmd.Parameters.AddWithValue("@CasaID", GetSafeIntValue(bodyDict, "CasaID"));
-                cmd.Parameters.AddWithValue("@ClusterID", GetSafeIntValue(bodyDict, "ClusterID"));
-                cmd.Parameters.AddWithValue("@InquilinoID", GetSafeIntValue(bodyDict, "InquilinoID"));
+
+
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -73,7 +77,7 @@ namespace ARSAN_FAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al crear Inquilino: {ex.Message}");
+                return StatusCode(500, $"Error al crear rondin: {ex.Message}");
             }
         }
 
@@ -84,20 +88,25 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_ActualizarInquilino"))
+                if (ExistsSP("sp_ActualizarRondin"))
                 {
-                    ExecSP("sp_ActualizarInquilino", bodyDict);
-                    return Ok("Actualizado (SP) sp_ActualizarInquilino");
+                    ExecSP("sp_ActualizarRondin", bodyDict);
+                    return Ok("Actualizado (SP) sp_ActualizarRondin");
                 }
 
-                var sql = "UPDATE Inquilino SET PersonaID, CasaID, ClusterID  = @PersonaID,  @CasaID, @ClusterID WHERE InquilinoID = @InquilinoID";
+                var sql = "UPDATE Rondin SET FechaRondin,EstadoTurno, Observaciones, GaritaID, TurnoID, PersonaID  =  @FechaRondin, @EstadoTurno, @Observaciones, @GaritaID, @TurnoID, @PersonaID WHERE RondinID = @RondinID";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
+
+               
+                cmd.Parameters.AddWithValue("@FechaRondin", GetSafeIntValue(bodyDict, "FechaRondin"));
+                cmd.Parameters.AddWithValue("@EstadoTurno", GetSafeIntValue(bodyDict, "EstadoTurno"));
+                cmd.Parameters.AddWithValue("@Observaciones", GetSafeIntValue(bodyDict, "Observaciones"));
+                cmd.Parameters.AddWithValue("@GaritaID", GetSafeIntValue(bodyDict, "GaritaID"));
+                cmd.Parameters.AddWithValue("@TurnoID", GetSafeIntValue(bodyDict, "TurnoID"));
                 cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
-                cmd.Parameters.AddWithValue("@CasaID", GetSafeIntValue(bodyDict, "CasaID"));
-                cmd.Parameters.AddWithValue("@ClusterID", GetSafeIntValue(bodyDict, "ClusterID"));
-                cmd.Parameters.AddWithValue("@InquilinoID", GetSafeIntValue(bodyDict, "InquilinoID"));
+                cmd.Parameters.AddWithValue("@RondinID", GetSafeIntValue(bodyDict, "RondinID"));
 
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
@@ -112,7 +121,7 @@ namespace ARSAN_FAPI.Controllers
             try
             {
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("DELETE FROM Inquilino WHERE InquilinoID = @id", cn);
+                using var cmd = new SqlCommand("DELETE FROM Rondin WHERE RondinID = @id", cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();

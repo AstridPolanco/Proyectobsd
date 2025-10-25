@@ -7,24 +7,44 @@
       "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:wwwroot\\frontend\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\tarjetaintegracionpagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\tarjetaintegracionpagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\rondincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\rondincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\detallerecibocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\detallerecibocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\turnoguardiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\turnoguardiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\garitacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\garitacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\inquilinocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\inquilinocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\marcacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\marcacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\guardiaseguridadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\guardiaseguridadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\vehiculocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\vehiculocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\departamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\departamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\detallerecibocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\detallerecibocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\tarjetaintegracionpagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\tarjetaintegracionpagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\marcacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\marcacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -43,16 +63,8 @@
       "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\propietariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\guardiaseguridadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\guardiaseguridadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\casacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\casacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\departamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|solutionrelative:controllers\\departamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{486C892C-E58C-4228-B95D-559FF2939F4C}|ARSAN-FAPI.csproj|c:\\users\\hp blue\\desktop\\tareas\\proyfinalbsd\\arsan-fapi\\controllers\\telefonocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -106,11 +118,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 76,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "DetalleReciboController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\DetalleReciboController.cs",
               "RelativeDocumentMoniker": "Controllers\\DetalleReciboController.cs",
@@ -123,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "PropietarioController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\PropietarioController.cs",
               "RelativeDocumentMoniker": "Controllers\\PropietarioController.cs",
@@ -131,12 +143,11 @@
               "RelativeToolTip": "Controllers\\PropietarioController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T06:46:48.847Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T06:46:48.847Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "TelefonoController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\TelefonoController.cs",
               "RelativeDocumentMoniker": "Controllers\\TelefonoController.cs",
@@ -144,25 +155,24 @@
               "RelativeToolTip": "Controllers\\TelefonoController.cs",
               "ViewState": "AgIAAMIAAAAAAAAAAAAmwPYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T06:03:30.757Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T06:03:30.757Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "GuardiaSeguridadController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\GuardiaSeguridadController.cs",
               "RelativeDocumentMoniker": "Controllers\\GuardiaSeguridadController.cs",
               "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\GuardiaSeguridadController.cs",
               "RelativeToolTip": "Controllers\\GuardiaSeguridadController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T06:03:01.443Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "CasaController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\CasaController.cs",
               "RelativeDocumentMoniker": "Controllers\\CasaController.cs",
@@ -170,12 +180,11 @@
               "RelativeToolTip": "Controllers\\CasaController.cs",
               "ViewState": "AgIAAI4AAAAAAAAAAAAYwBAAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T06:02:10.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T06:02:10.402Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "ClusterController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\ClusterController.cs",
               "RelativeDocumentMoniker": "Controllers\\ClusterController.cs",
@@ -183,12 +192,11 @@
               "RelativeToolTip": "Controllers\\ClusterController.cs",
               "ViewState": "AgIAAL4AAAAAAAAAAAAmwPIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T05:55:10.798Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T05:55:10.798Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "ResidencialController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\ResidencialController.cs",
               "RelativeDocumentMoniker": "Controllers\\ResidencialController.cs",
@@ -222,11 +230,50 @@
         },
         {
           "DockedHeight": 324,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "RondinController.cs",
+              "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\RondinController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RondinController.cs",
+              "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\RondinController.cs",
+              "RelativeToolTip": "Controllers\\RondinController.cs",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAswHsAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T08:19:06.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GaritaController.cs",
+              "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\GaritaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GaritaController.cs",
+              "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\GaritaController.cs",
+              "RelativeToolTip": "Controllers\\GaritaController.cs",
+              "ViewState": "AgIAANcAAAAAAAAAAADwv3MAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T08:10:53.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TurnoGuardiaController.cs",
+              "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\TurnoGuardiaController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TurnoGuardiaController.cs",
+              "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\TurnoGuardiaController.cs",
+              "RelativeToolTip": "Controllers\\TurnoGuardiaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T07:59:17.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "TarjetaIntegracionPagosController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\TarjetaIntegracionPagosController.cs",
               "RelativeDocumentMoniker": "Controllers\\TarjetaIntegracionPagosController.cs",
@@ -234,12 +281,11 @@
               "RelativeToolTip": "Controllers\\TarjetaIntegracionPagosController.cs",
               "ViewState": "AgIAAD8AAAAAAAAAAAAUwE0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T07:35:18.856Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T07:35:18.856Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "ActualizacionesController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\ActualizacionesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ActualizacionesController.cs",
@@ -251,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "MarcaController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\MarcaController.cs",
               "RelativeDocumentMoniker": "Controllers\\MarcaController.cs",
@@ -259,38 +305,37 @@
               "RelativeToolTip": "Controllers\\MarcaController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T07:31:05.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T07:31:05.399Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "VehiculoController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\VehiculoController.cs",
               "RelativeDocumentMoniker": "Controllers\\VehiculoController.cs",
               "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\VehiculoController.cs",
               "RelativeToolTip": "Controllers\\VehiculoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAMsAAAAAAAAAAADwv3kAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T07:28:44.703Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "InquilinoController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\InquilinoController.cs",
               "RelativeDocumentMoniker": "Controllers\\InquilinoController.cs",
               "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\InquilinoController.cs",
               "RelativeToolTip": "Controllers\\InquilinoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAABVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T06:56:13.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "PersonaController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\PersonaController.cs",
               "RelativeDocumentMoniker": "Controllers\\PersonaController.cs",
@@ -298,12 +343,11 @@
               "RelativeToolTip": "Controllers\\PersonaController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T03:12:57.907Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T03:12:57.907Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "TipoTelefonoController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\TipoTelefonoController.cs",
               "RelativeDocumentMoniker": "Controllers\\TipoTelefonoController.cs",
@@ -315,7 +359,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "ResidencialDireccionController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\ResidencialDireccionController.cs",
               "RelativeDocumentMoniker": "Controllers\\ResidencialDireccionController.cs",
@@ -327,7 +371,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "MunicipioController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\MunicipioController.cs",
               "RelativeDocumentMoniker": "Controllers\\MunicipioController.cs",
@@ -339,20 +383,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 7,
               "Title": "DepartamentoController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\DepartamentoController.cs",
               "RelativeDocumentMoniker": "Controllers\\DepartamentoController.cs",
               "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\DepartamentoController.cs",
               "RelativeToolTip": "Controllers\\DepartamentoController.cs",
-              "ViewState": "AgIAAKQAAAAAAAAAAAA6wLkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T03:10:58.827Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "MantenimientosCRUDController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\MantenimientosCRUDController.cs",
               "RelativeDocumentMoniker": "Controllers\\MantenimientosCRUDController.cs",
@@ -360,12 +404,11 @@
               "RelativeToolTip": "Controllers\\MantenimientosCRUDController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T01:48:09.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T01:48:09.039Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "Mantenimientos1y2Controller.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\Mantenimientos1y2Controller.cs",
               "RelativeDocumentMoniker": "Controllers\\Mantenimientos1y2Controller.cs",
@@ -377,7 +420,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "Mantenimientos4Controller.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\Mantenimientos4Controller.cs",
               "RelativeDocumentMoniker": "Controllers\\Mantenimientos4Controller.cs",
@@ -389,7 +432,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -407,14 +450,14 @@
               "RelativeDocumentMoniker": "wwwroot\\frontend\\index.html",
               "ToolTip": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\wwwroot\\frontend\\index.html",
               "RelativeToolTip": "wwwroot\\frontend\\index.html",
-              "ViewState": "AgIAAOkAAAAAAAAAAAAUwPoAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAOYAAAAAAAAAAAAUwOgAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-10-16T22:07:55.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "ProcedimientosController.cs",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\Controllers\\ProcedimientosController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProcedimientosController.cs",
@@ -426,7 +469,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\HP BLUE\\Desktop\\Tareas\\proyfinalbsd\\ARSAN-FAPI\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -434,8 +477,7 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-16T21:57:09.599Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T21:57:09.599Z"
             }
           ]
         }

@@ -7,10 +7,10 @@ namespace ARSAN_FAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class InquilinoController : ControllerBase
+    public class TurnoGuardiaController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public InquilinoController(IConfiguration config) { _config = config; }
+        public TurnoGuardiaController(IConfiguration config) { _config = config; }
         private string Conn => _config.GetConnectionString("DefaultConnection");
 
         [HttpGet("Listar")]
@@ -20,7 +20,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM Inquilino", cn);
+                using var cmd = new SqlCommand("SELECT TOP (1000) * FROM TurnoGuardia", cn);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
                 return Ok(DataTableToList(dt));
@@ -35,7 +35,7 @@ namespace ARSAN_FAPI.Controllers
             {
                 var dt = new DataTable();
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("SELECT * FROM Inquilino WHERE InquilinoID = @id", cn);
+                using var cmd = new SqlCommand("SELECT * FROM TurnoGuardia WHERE TurnoID = @id", cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 using var da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -51,21 +51,23 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_InsertarInquilino"))
+                if (ExistsSP("sp_InsertarTurnoGuardia"))
                 {
-                    ExecSP("sp_InsertarInquilino", bodyDict);
-                    return Ok("Insertado (SP) sp_InsertarInquilino");
+                    ExecSP("sp_InsertarTurnoGuardia", bodyDict);
+                    return Ok("Insertado (SP) sp_InsertarTurnoGuardia");
                 }
 
-                var sql = "INSERT INTO Inquilino(InquilinoID, PersonaID, CasaID, ClusterID) VALUES(@InquilinoID, @PersonaID, @CasaID, @ClusterID)";
+                var sql = "INSERT INTO TurnoGuardia(TurnoID, GaritaID, GuardiaID, FechaInicio, FechaFin, Observaciones) VALUES(@TurnoID, @GaritaID, @GuardiaID, @FechaInicio, @FechaFin, @Observaciones)";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-        
-                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
-                cmd.Parameters.AddWithValue("@CasaID", GetSafeIntValue(bodyDict, "CasaID"));
-                cmd.Parameters.AddWithValue("@ClusterID", GetSafeIntValue(bodyDict, "ClusterID"));
-                cmd.Parameters.AddWithValue("@InquilinoID", GetSafeIntValue(bodyDict, "InquilinoID"));
+                cmd.Parameters.AddWithValue("@TurnoID", GetSafeIntValue(bodyDict, "TurnoID"));
+                cmd.Parameters.AddWithValue("@GaritaID", GetSafeIntValue(bodyDict, "GaritaID"));
+                cmd.Parameters.AddWithValue("@GuardiaID", GetSafeIntValue(bodyDict, "GuardiaID"));
+                cmd.Parameters.AddWithValue("@FechaInicio", GetSafeIntValue(bodyDict, "FechaInicio"));
+                cmd.Parameters.AddWithValue("@FechaFin", GetSafeIntValue(bodyDict, "FechaFin"));
+                cmd.Parameters.AddWithValue("@Observaciones", GetSafeIntValue(bodyDict, "Observaciones"));
+          
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -73,7 +75,7 @@ namespace ARSAN_FAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error al crear Inquilino: {ex.Message}");
+                return StatusCode(500, $"Error al crear turnoguardia: {ex.Message}");
             }
         }
 
@@ -84,20 +86,23 @@ namespace ARSAN_FAPI.Controllers
             {
                 var bodyDict = JsonElementToDictionary(body);
 
-                if (ExistsSP("sp_ActualizarInquilino"))
+                if (ExistsSP("sp_ActualizarTurnoGuardia"))
                 {
-                    ExecSP("sp_ActualizarInquilino", bodyDict);
-                    return Ok("Actualizado (SP) sp_ActualizarInquilino");
+                    ExecSP("sp_ActualizarTurnoGuardia", bodyDict);
+                    return Ok("Actualizado (SP) sp_ActualizarTurnoGuardia");
                 }
 
-                var sql = "UPDATE Inquilino SET PersonaID, CasaID, ClusterID  = @PersonaID,  @CasaID, @ClusterID WHERE InquilinoID = @InquilinoID";
+                var sql = "UPDATE TurnoGuardia SET GaritaID, GuardiaID, FechaInicio, FechaFin, Observaciones  =  @GaritaID, @GuardiaID, @FechaInicio, @FechaFin, @Observaciones WHERE TurnoID = @TurnoID";
                 using var cn = new SqlConnection(Conn);
                 using var cmd = new SqlCommand(sql, cn);
 
-                cmd.Parameters.AddWithValue("@PersonaID", GetSafeIntValue(bodyDict, "PersonaID"));
-                cmd.Parameters.AddWithValue("@CasaID", GetSafeIntValue(bodyDict, "CasaID"));
-                cmd.Parameters.AddWithValue("@ClusterID", GetSafeIntValue(bodyDict, "ClusterID"));
-                cmd.Parameters.AddWithValue("@InquilinoID", GetSafeIntValue(bodyDict, "InquilinoID"));
+                
+                cmd.Parameters.AddWithValue("@GaritaID", GetSafeIntValue(bodyDict, "GaritaID"));
+                cmd.Parameters.AddWithValue("@GuardiaID", GetSafeIntValue(bodyDict, "GuardiaID"));
+                cmd.Parameters.AddWithValue("@FechaInicio", GetSafeIntValue(bodyDict, "FechaInicio"));
+                cmd.Parameters.AddWithValue("@FechaFin", GetSafeIntValue(bodyDict, "FechaFin"));
+                cmd.Parameters.AddWithValue("@Observaciones", GetSafeIntValue(bodyDict, "Observaciones"));
+                cmd.Parameters.AddWithValue("@TurnoID", GetSafeIntValue(bodyDict, "TurnoID"));
 
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();
@@ -112,7 +117,7 @@ namespace ARSAN_FAPI.Controllers
             try
             {
                 using var cn = new SqlConnection(Conn);
-                using var cmd = new SqlCommand("DELETE FROM Inquilino WHERE InquilinoID = @id", cn);
+                using var cmd = new SqlCommand("DELETE FROM TurnoGuardia WHERE TurnoID = @id", cn);
                 cmd.Parameters.AddWithValue("@id", id);
                 cn.Open();
                 var rows = cmd.ExecuteNonQuery();

@@ -1,0 +1,656 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Residenciales San Francisco – Administración</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <style>
+        :root {
+            --petroleo: #0f4c5c;
+            --dorado: #ffd700;
+        }
+
+        body {
+            background: #f4f6f8;
+            font-family: Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+        }
+
+        .sidebar {
+            width: 210px;
+            background: linear-gradient(180deg,var(--petroleo),#083b45);
+            min-height: 100vh;
+            color: #fff;
+            position: fixed;
+            padding: 1rem .6rem;
+        }
+
+            .sidebar .brand {
+                display: flex;
+                align-items: center;
+                gap: .6rem;
+                padding: .2rem .6rem;
+                margin-bottom: 1rem
+            }
+
+            .sidebar .nav-link {
+                color: rgba(255,255,255,.95);
+                padding: .45rem .6rem;
+                border-radius: 8px;
+                margin: .15rem 0
+            }
+
+                .sidebar .nav-link.active {
+                    background: rgba(255,255,255,.06);
+                    color: var(--dorado)
+                }
+
+        main {
+            margin-left: 210px;
+            padding: 1.2rem;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,.06)
+        }
+
+        .mini-btn {
+            padding: .18rem .45rem;
+            font-size: .85rem;
+            border-radius: 6px
+        }
+
+        .table-container {
+            max-height: 62vh;
+            overflow: auto
+        }
+
+        .gold {
+            color: var(--dorado)
+        }
+
+        .small-muted {
+            color: #6c757d;
+            font-size: .9rem
+        }
+
+        .list-entity {
+            cursor: pointer
+        }
+
+        .form-control-sm {
+            padding: .28rem .5rem
+        }
+
+        .entity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+            gap: 10px;
+        }
+
+        .entity-card {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(2,6,23,.04);
+            text-align: center;
+            border-left: 4px solid #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="bi bi-shield-shaded gold" style="font-size:1.4rem"></i>
+                <div><div style="font-weight:700">Residenciales San Francisco</div><div style="font-size:.82rem;opacity:.95">Administración</div></div>
+            </div>
+            <nav class="nav flex-column px-1">
+                <a class="nav-link active" href="#" data-target="inicio"> <i class="bi bi-house-door"></i> Inicio</a>
+                <a class="nav-link" href="#" data-target="consultasPrincipal"> <i class="bi bi-bar-chart-line"></i> Consultas</a>
+                <a class="nav-link" href="#" data-target="consultas4b"> <i class="bi bi-search"></i> Gestión Entidades</a>
+                <a class="nav-link" href="#" data-target="mantenimientos"> <i class="bi bi-tools"></i> Mantenimientos</a>
+            </nav>
+            <div style="position:absolute;left:.6rem;bottom:1rem;color:rgba(255,255,255,.8);font-size:.82rem">v1.0 • BD I</div>
+        </aside>
+
+        <main class="flex-fill">
+            <div class="content-area">
+                <!-- INICIO -->
+                <section id="inicioSection">
+                    <div class="card p-4 mb-4">
+                        <h4 class="mb-1">Bienvenido al panel de administración.</h4>
+                        <div id="fechaInicio" class="small-muted"></div>
+                        <hr>
+                        <p class="small-muted mb-1">Usa la barra lateral para navegar a Consultas, Gestión de Entidades y Mantenimientos.</p>
+                        <div class="mt-2">
+                            <button class="btn btn-primary btn-sm" onclick="mostrar('consultasPrincipal')"><i class="bi bi-bar-chart-line"></i> Ir a Consultas</button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="mostrar('consultas4b')"><i class="bi bi-search"></i> Ir a Gestión Entidades</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CONSULTAS PRINCIPALES -->
+                <section id="consultasPrincipalSection" style="display:none;">
+                    <div class="card p-3 mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="bi bi-bar-chart-line fs-4"></i><h5 class="mb-0">Consultas Principales (1..25)</h5>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <label class="form-label small">Selecciona consulta</label>
+                                <select id="consultaPrincipalSelect" class="form-select form-select-sm">
+                                    <optgroup label="Generales">
+                                        <option value="VehiculosPorVivienda">Vehículos por Vivienda</option>
+                                        <option value="VehiculosVisitantesPorHora">Vehículos visitantes por hora</option>
+                                        <option value="ReporteViviendas">Reporte de viviendas</option>
+                                        <option value="PersonaIngresaDelAl">Personas que ingresan entre 23:00 y 01:00</option>
+                                        <option value="sp_VecinoPagadoMas">Vecino que más pagó</option>
+                                        <option value="PropietariosDianaII">Propietarios Diana II</option>
+                                        <option value="VecinoPresidente">Vecino Presidente</option>
+                                        <option value="sp_Consulta8">Propietarios sin Junta</option>
+                                    </optgroup>
+                                    <optgroup label="Específicas">
+                                        <option value="sp_Turnos24hrsGuardias">Turnos >24 hrs</option>
+                                        <option value="sp_GuardiasHombresYMujeres">Guardias por género</option>
+                                        <option value="sp_VecinoIngresaMasDomingos">Vecino que más ingresa los domingos</option>
+                                        <option value="sp_ViviendaPagosAtrasados">Vivienda más atrasada</option>
+                                        <option value="sp_DiaMesMasDineroRecibido">Día del mes con más dinero</option>
+                                        <option value="sp_ResidenciaMasRecibos">Residencia con más recibos</option>
+                                        <option value="sp_DiaMesCarrosIngreso">Carros ingresados por día</option>
+                                        <option value="sp_PersonaMasVisitaCondominio">Persona que más visita</option>
+                                        <option value="sp_PersonaInquilinoYPropietario">Inquilinos que son propietarios</option>
+                                        <option value="sp_PropietariosConLicenciaTipoA">Propietarios con licencia A</option>
+                                        <option value="sp_ValidarPagoVehiculoAdicional">Validar pago vehículo adicional</option>
+                                        <option value="sp_ResidenciaMasVisitada">Residencia más visitada</option>
+                                        <option value="sp_ConceptoMultaMasUtilizado">Concepto multa más usado</option>
+                                        <option value="sp_CasasConMultasPendientes">Casas con multas pendientes</option>
+                                        <option value="sp_MesConMasMultasPorDesorden">Mes con más multas por desorden</option>
+                                        <option value="sp_TotalRecaudadoPorMultas">Total recaudado por multas</option>
+                                        <option value="sp_PropietarioConMasMultas">Propietario con más multas</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div id="paramsPrincipal" class="mb-2"></div>
+                                <div>
+                                    <button id="btnEjecutarPrincipal" class="btn btn-primary btn-sm"><i class="bi bi-play-circle"></i> Ejecutar</button>
+                                    <span id="estadoPrincipal" class="ms-2 small-muted"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="resultadoPrincipal" class="mt-3"></div>
+                    </div>
+                </section>
+
+                <!-- CONSULTAS 4B (gestión por entidad) -->
+                <section id="consultas4bSection" style="display:none;">
+                    <div class="card p-3 mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <i class="bi bi-search fs-4"></i><h5 class="mb-0">Gestión por Entidad (click en entidad para cargar)</h5>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div id="entidadesList" class="list-group"></div>
+                                <div class="small-muted mt-2">O selecciona desde la cuadrícula</div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div id="entidadPanel">
+                                    <p class="small-muted">Selecciona una entidad de la lista o la cuadrícula para ver / buscar / insertar / editar / eliminar.</p>
+                                    <div id="entityGrid" class="mt-3 entity-grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MANTENIMIENTOS -->
+                <section id="mantenimientosSection" style="display:none;">
+                    <div class="card p-3 mb-3">
+                        <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-tools fs-4"></i><h5 class="mb-0">Mantenimientos (SP Insertar / Eliminar centralizados)</h5></div>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <label class="form-label small">Selecciona acción</label>
+                                <select id="mantenimientoSelect" class="form-select form-select-sm">
+                                    <option value="">--Seleccione--</option>
+                                    <option value="sp_InsertarPersona">Insertar Persona</option>
+                                    <option value="sp_InsertarCasa">Insertar Casa</option>
+                                    <option value="sp_InsertarCluster">Insertar Cluster</option>
+                                    <option value="sp_InsertarGuardiaSeguridad">Insertar GuardiaSeguridad</option>
+                                    <option value="sp_EliminarPersonaIR">Eliminar Persona (IR)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <div id="mantenimientoParams"></div>
+                                <div class="mt-2"><button id="btnEjecutarMant" class="btn btn-success btn-sm"><i class="bi bi-check-circle"></i> Ejecutar</button></div>
+                                <div id="mantenimientoResultado" class="mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE = location.origin + '/api';
+        // NAV
+        document.querySelectorAll('.sidebar .nav-link').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelectorAll('.sidebar .nav-link').forEach(x => x.classList.remove('active'));
+                a.classList.add('active');
+                const t = a.getAttribute('data-target');
+                mostrar(t);
+            });
+        });
+
+        function mostrar(seccion) {
+            document.getElementById('inicioSection').style.display = 'none';
+            document.getElementById('consultasPrincipalSection').style.display = 'none';
+            document.getElementById('consultas4bSection').style.display = 'none';
+            document.getElementById('mantenimientosSection').style.display = 'none';
+            if (seccion === 'inicio') document.getElementById('inicioSection').style.display = 'block';
+            if (seccion === 'consultasPrincipal') document.getElementById('consultasPrincipalSection').style.display = 'block';
+            if (seccion === 'consultas4b') document.getElementById('consultas4bSection').style.display = 'block';
+            if (seccion === 'mantenimientos') document.getElementById('mantenimientosSection').style.display = 'block';
+        }
+
+        document.getElementById('fechaInicio').textContent = new Date().toLocaleString();
+        mostrar('inicio');
+
+        /* ========== CONSULTAS PRINCIPALES ========== */
+        const consultaConfig = {
+            VehiculosPorVivienda: { params: ['ResidencialID', 'ClusterID'], endpoint: 'VehiculosPorVivienda' },
+            VehiculosVisitantesPorHora: { params: ['FechaInicio', 'FechaFin'], endpoint: 'VehiculosVisitantesPorHora' },
+            ReporteViviendas: { params: [], endpoint: 'ReporteViviendas' },
+            PersonaIngresaDelAl: { params: ['FechaInicio', 'FechaFin'], endpoint: 'PersonaIngresaDelAl' },
+            sp_VecinoPagadoMas: { params: ['FechaDesde', 'FechaHasta'], endpoint: 'sp_VecinoPagadoMas' },
+            PropietariosDianaII: { params: [], endpoint: 'PropietariosDianaII' },
+            VecinoPresidente: { params: [], endpoint: 'VecinoPresidente' },
+            sp_Consulta8: { params: [], endpoint: 'sp_Consulta8' },
+            sp_Turnos24hrsGuardias: { params: ['FechaInicioTurno', 'FechaFinTurno'], endpoint: 'sp_Turnos24hrsGuardias' },
+            sp_GuardiasHombresYMujeres: { params: [], endpoint: 'sp_GuardiasHombresYMujeres' },
+            sp_VecinoIngresaMasDomingos: { params: [], endpoint: 'sp_VecinoIngresaMasDomingos' },
+            sp_ViviendaPagosAtrasados: { params: [], endpoint: 'sp_ViviendaPagosAtrasados' },
+            sp_DiaMesMasDineroRecibido: { params: [], endpoint: 'sp_DiaMesMasDineroRecibido' },
+            sp_ResidenciaMasRecibos: { params: [], endpoint: 'sp_ResidenciaMasRecibos' },
+            sp_DiaMesCarrosIngreso: { params: [], endpoint: 'sp_DiaMesCarrosIngreso' },
+            sp_PersonaMasVisitaCondominio: { params: [], endpoint: 'sp_PersonaMasVisitaCondominio' },
+            sp_PersonaInquilinoYPropietario: { params: [], endpoint: 'sp_PersonaInquilinoYPropietario' },
+            sp_PropietariosConLicenciaTipoA: { params: [], endpoint: 'sp_PropietariosConLicenciaTipoA' },
+            sp_ValidarPagoVehiculoAdicional: { params: ['CasaID'], endpoint: 'sp_ValidarPagoVehiculoAdicional' },
+            sp_ResidenciaMasVisitada: { params: ['FechaInicio', 'FechaFin'], endpoint: 'sp_ResidenciaMasVisitada' },
+            sp_ConceptoMultaMasUtilizado: { params: ['FechaInicio', 'FechaFin'], endpoint: 'sp_ConceptoMultaMasUtilizado' },
+            sp_CasasConMultasPendientes: { params: [], endpoint: 'sp_CasasConMultasPendientes' },
+            sp_MesConMasMultasPorDesorden: { params: [], endpoint: 'sp_MesConMasMultasPorDesorden' },
+            sp_TotalRecaudadoPorMultas: { params: [], endpoint: 'sp_TotalRecaudadoPorMultas' },
+            sp_PropietarioConMasMultas: { params: [], endpoint: 'sp_PropietarioConMasMultas' }
+        };
+
+        function generarInputs(container, params) {
+            container.innerHTML = '';
+            if (!params || params.length === 0) return;
+            let html = '<div class="row g-2">';
+            params.forEach(p => {
+                const type = p.toLowerCase().includes('fecha') || p.toLowerCase().includes('desde') || p.toLowerCase().includes('hasta') ? 'date' : 'text';
+                html += `<div class="col-md-6"><label class="form-label small">${p}</label><input id="${p}" class="form-control form-control-sm" type="${type}" /></div>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        document.getElementById('consultaPrincipalSelect').addEventListener('change', e => {
+            const key = e.target.value; const cfg = consultaConfig[key] || { params: [] };
+            generarInputs(document.getElementById('paramsPrincipal'), cfg.params);
+            document.getElementById('resultadoPrincipal').innerHTML = ''; document.getElementById('estadoPrincipal').textContent = '';
+        });
+
+        document.getElementById('btnEjecutarPrincipal').addEventListener('click', async () => {
+            const key = document.getElementById('consultaPrincipalSelect').value;
+            if (!key) return alert('Selecciona una consulta');
+            const cfg = consultaConfig[key];
+            let url = `${API_BASE}/Procedimientos/${cfg.endpoint}`;
+            if (cfg.params && cfg.params.length) {
+                const q = cfg.params.map(p => {
+                    const el = document.getElementById(p);
+                    return `${encodeURIComponent(p)}=${encodeURIComponent(el ? el.value : '')}`;
+                }).join('&');
+                url += `?${q}`;
+            }
+            document.getElementById('resultadoPrincipal').innerHTML = '<div class="small-muted">Cargando...</div>';
+            document.getElementById('estadoPrincipal').textContent = '⏳';
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(await res.text());
+                const data = await res.json();
+                renderTable(data, 'resultadoPrincipal');
+                document.getElementById('estadoPrincipal').textContent = '✅';
+            } catch (err) {
+                document.getElementById('resultadoPrincipal').innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`;
+                document.getElementById('estadoPrincipal').textContent = '✖';
+                console.error(err);
+            }
+        });
+
+        /* ========= ENTIDADES (lista + cuadrícula) ========= */
+        const entidades = [
+            "Departamento", "Municipio", "Residencial", "ResidencialDireccion", "Cluster",
+            "Casa", "GuardiaSeguridad", "Persona", "TipoTelefono", "Telefono",
+            "Propietario", "Inquilino", "TurnoGuardia", "Garita", "Rondin",
+            "Marca", "Linea", "Visita", "Vehiculo", "TarjetaTalanquera",
+            "RegistroEntrada", "Visitante", "EstadoDeCuenta", "PersonaNoGrata",
+            "JuntaDirectiva", "RegistroDeclaracion", "ConceptoPago", "Recibo",
+            "DetalleRecibo", "TarjetaIntegracionPagos", "TipoPago", "DetallePago",
+            "Multa", "PagosAdicionales", "RegistroCenso", "VehiculoAdicional",
+            "Censo", "LicenciaConducir", "TipoLicencia", "TipoMulta",
+            "TipoGarita", "ReciboResidencia", "VehiculoResidencia"
+        ];
+
+        const entidadesList = document.getElementById('entidadesList');
+        entidades.forEach(en => {
+            const a = document.createElement('a');
+            a.href = '#'; a.className = 'list-group-item list-group-item-action'; a.textContent = en;
+            a.addEventListener('click', (ev) => { ev.preventDefault(); cargarEntidad(en); document.querySelectorAll('#entidadesList .list-group-item').forEach(x => x.classList.remove('active')); a.classList.add('active'); });
+            entidadesList.appendChild(a);
+        });
+
+        // entity grid
+        const entityGrid = document.getElementById("entityGrid");
+        entityGrid.innerHTML = entidades.map(e => `
+        <div class="entity-card" onclick="cargarEntidad('${e}')">
+          <h6 style="margin:0">${e}</h6>
+        </div>
+      `).join('');
+
+        async function cargarEntidad(key) {
+            const panel = document.getElementById('entidadPanel');
+            panel.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div><h6>${key}</h6><p class="small-muted">Listar / buscar / insertar / editar / eliminar</p></div>
+            <div>
+              <button class="btn btn-success btn-sm" id="btnNuevo${key}"><i class="bi bi-plus-lg"></i> Nuevo</button>
+              <button class="btn btn-primary btn-sm" id="btnRefrescar${key}"><i class="bi bi-arrow-repeat"></i> Refrescar</button>
+            </div>
+          </div>
+          <div id="entidadControls">
+            <div class="row gx-2 mb-2">
+              <div class="col-md-5"><input id="filtro${key}" placeholder="Filtro libre (texto)" class="form-control form-control-sm"/></div>
+              <div class="col-md-3"><input id="id${key}" placeholder="Buscar por ID" class="form-control form-control-sm"/></div>
+              <div class="col-md-4"><button id="btnBuscar${key}" class="btn btn-sm btn-outline-primary">Buscar</button></div>
+            </div>
+          </div>
+          <div id="entidadResult${key}"></div>
+        `;
+            document.getElementById(`btnRefrescar${key}`).addEventListener('click', () => fetchList(key));
+            document.getElementById(`btnBuscar${key}`).addEventListener('click', () => searchEntity(key));
+            document.getElementById(`btnNuevo${key}`).addEventListener('click', () => showNewForm(key));
+            fetchList(key);
+        }
+
+        async function fetchList(key) {
+            const cont = document.getElementById(`entidadResult${key}`);
+            cont.innerHTML = '<div class="small-muted">Cargando...</div>';
+            try {
+                const res = await fetch(`${API_BASE}/${key}/Listar`);
+                if (!res.ok) throw new Error(await res.text());
+                const data = await res.json();
+                renderCRUDTable(key, data, cont);
+            } catch (err) {
+                cont.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`; console.error(err);
+            }
+        }
+
+        async function searchEntity(key) {
+            const filtro = document.getElementById(`filtro${key}`).value;
+            const id = document.getElementById(`id${key}`).value;
+            const cont = document.getElementById(`entidadResult${key}`);
+            cont.innerHTML = '<div class="small-muted">Buscando...</div>';
+            try {
+                let url = `${API_BASE}/${key}/Listar`;
+                if (id) url = `${API_BASE}/${key}/Get?id=${encodeURIComponent(id)}`;
+                else if (filtro) {
+                    // try server side listing and client filter
+                    const resAll = await fetch(`${API_BASE}/${key}/Listar`);
+                    if (!resAll.ok) throw new Error(await resAll.text());
+                    const all = await resAll.json();
+                    const filtered = all.filter(r => JSON.stringify(r).toLowerCase().includes(filtro.toLowerCase()));
+                    renderCRUDTable(key, filtered, cont);
+                    return;
+                }
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(await res.text());
+                const data = await res.json();
+                renderCRUDTable(key, data, cont);
+            } catch (err) { cont.innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`; console.error(err); }
+        }
+
+        function renderCRUDTable(key, data, cont) {
+            if (!data || (Array.isArray(data) && data.length === 0)) { cont.innerHTML = '<div class="alert alert-warning">Sin registros.</div>'; return; }
+            const rows = Array.isArray(data) ? data : [data];
+            const headers = Object.keys(rows[0] || {});
+            let html = '<div class="table-container"><table class="table table-sm table-striped"><thead><tr>';
+            headers.forEach(h => html += `<th>${h}</th>`);
+            html += '<th>Acciones</th></tr></thead><tbody>';
+            rows.forEach(r => {
+                html += '<tr>';
+                headers.forEach(h => html += `<td>${r[h] ?? ''}</td>`);
+                const idField = headers.find(h => /id$/i.test(h)) || headers[0];
+                const idVal = r[idField];
+                html += `<td>
+            <button class="btn btn-sm btn-outline-primary mini-btn" onclick="editRecord('${key}','${idVal}')"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-outline-danger mini-btn" onclick="deleteRecord('${key}','${idVal}')"><i class="bi bi-trash"></i></button>
+          </td>`;
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            cont.innerHTML = html;
+        }
+
+        // show new form: for the 5 functional entities we build friendly form; else ask JSON
+        async function showNewForm(key) {
+            const panel = document.getElementById('entidadPanel');
+            // only friendly UI for the 5 chosen entities
+            const friendly = ['Departamento', 'Municipio', 'ResidencialDireccion', 'TipoTelefono', 'Persona'];
+            if (!friendly.includes(key)) {
+                const html = `
+            <div class="card p-3 mb-3" id="newCard${key}">
+              <h6>Insertar nuevo ${key}</h6>
+              <div class="mb-2 small-muted">Introduce JSON con los campos a insertar (ej: {"PersonaID":1,"PrimerNombre":"Ana"})</div>
+              <textarea id="jsonNew${key}" class="form-control form-control-sm" rows="5">{}</textarea>
+              <div class="mt-2">
+                <button class="btn btn-success btn-sm" id="saveNew${key}">Guardar</button>
+                <button class="btn btn-secondary btn-sm" id="cancelNew${key}">Cancelar</button>
+              </div>
+            </div>`;
+                panel.insertAdjacentHTML('beforeend', html);
+                document.getElementById(`cancelNew${key}`).addEventListener('click', () => document.getElementById(`newCard${key}`).remove());
+                document.getElementById(`saveNew${key}`).addEventListener('click', async () => {
+                    const raw = document.getElementById(`jsonNew${key}`).value;
+                    let obj;
+                    try { obj = JSON.parse(raw); } catch (e) { return alert('JSON inválido'); }
+                    try {
+                        const res = await fetch(`${API_BASE}/${key}/Crear`, {
+                            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj)
+                        });
+                        if (!res.ok) throw new Error(await res.text());
+                        alert(await res.text());
+                        document.getElementById(`newCard${key}`).remove();
+                        fetchList(key);
+                    } catch (err) { alert('Error: ' + err.message); console.error(err); }
+                });
+                return;
+            }
+
+            // For friendly keys we request sample row to build fields
+            try {
+                const res = await fetch(`${API_BASE}/${key}/Listar`);
+                if (!res.ok) throw new Error(await res.text());
+                const data = await res.json();
+                const sample = (Array.isArray(data) && data.length > 0) ? data[0] : null;
+                // build form
+                let formHtml = `<div class="card p-3 mb-3" id="newCard${key}">
+            <h6>Insertar nuevo ${key}</h6>
+            <form id="formNew${key}" class="row g-2">`;
+                if (!sample) {
+                    // some manual default fields for known entities
+                    if (key === 'Departamento') {
+                        formHtml += field('DepartamentoID', 'number') + field('Descripcion', 'text');
+                    } else if (key === 'TipoTelefono') {
+                        formHtml += field('TipoTelefonoID', 'number') + field('Descripcion', 'text');
+                    } else {
+                        formHtml += `<div class="col-12 small-muted">No hay muestra de datos. Introduce JSON en la interfaz simple.</div>`;
+                    }
+                } else {
+                    for (const k in sample) {
+                        // show all except auto IDs? show for user to fill
+                        formHtml += field(k, 'text');
+                    }
+                }
+                formHtml += `</form>
+            <div class="mt-3">
+              <button class="btn btn-success btn-sm" id="saveNewFriendly${key}"><i class="bi bi-save"></i> Guardar</button>
+              <button class="btn btn-secondary btn-sm" id="cancelNewFriendly${key}">Cancelar</button>
+            </div></div>`;
+                panel.insertAdjacentHTML('beforeend', formHtml);
+                document.getElementById(`cancelNewFriendly${key}`).addEventListener('click', () => document.getElementById(`newCard${key}`).remove());
+                document.getElementById(`saveNewFriendly${key}`).addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const inputs = document.getElementById(`formNew${key}`).querySelectorAll('input');
+                    const obj = {};
+                    inputs.forEach(i => { if (i.value !== '') obj[i.name] = i.value; });
+                    try {
+                        const res2 = await fetch(`${API_BASE}/${key}/Crear`, {
+                            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj)
+                        });
+                        if (!res2.ok) throw new Error(await res2.text());
+                        alert(await res2.text());
+                        document.getElementById(`newCard${key}`).remove();
+                        fetchList(key);
+                    } catch (err) { alert('Error: ' + err.message); console.error(err); }
+                });
+
+                function field(name, type) {
+                    return `<div class="col-md-6"><label class="form-label small">${name}</label><input class="form-control form-control-sm" name="${name}" type="${type}" /></div>`;
+                }
+            } catch (err) {
+                panel.insertAdjacentHTML('beforeend', `<div class="alert alert-danger">Error: ${err.message}</div>`);
+            }
+        }
+
+        async function editRecord(key, id) {
+            if (!id) return alert('ID no disponible');
+            try {
+                const res = await fetch(`${API_BASE}/${key}/Get?id=${encodeURIComponent(id)}`);
+                if (!res.ok) throw new Error(await res.text());
+                const data = await res.json();
+                const record = Array.isArray(data) ? data[0] : data;
+                const panel = document.getElementById('entidadPanel');
+                let html = `<div class="card p-3 mb-3" id="editCard${key}">
+            <h6>Editar ${key} - ${id}</h6>
+            <form id="formEdit${key}" class="row g-2">`;
+                for (const k in record) {
+                    html += `<div class="col-md-6"><label class="form-label small">${k}</label><input name="${k}" class="form-control form-control-sm" value="${record[k] ?? ''}" /></div>`;
+                }
+                html += `</form>
+            <div class="mt-3">
+              <button class="btn btn-primary btn-sm" id="saveEdit${key}"><i class="bi bi-save"></i> Guardar</button>
+              <button class="btn btn-secondary btn-sm" id="cancelEdit${key}">Cancelar</button>
+            </div></div>`;
+                panel.insertAdjacentHTML('beforeend', html);
+                document.getElementById(`cancelEdit${key}`).addEventListener('click', () => document.getElementById(`editCard${key}`).remove());
+                document.getElementById(`saveEdit${key}`).addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const inputs = document.getElementById(`formEdit${key}`).querySelectorAll('input');
+                    const obj = {};
+                    inputs.forEach(i => obj[i.name] = i.value === '' ? null : i.value);
+                    try {
+                        const resp = await fetch(`${API_BASE}/${key}/Actualizar`, {
+                            method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj)
+                        });
+                        if (!resp.ok) throw new Error(await resp.text());
+                        alert(await resp.text());
+                        document.getElementById(`editCard${key}`).remove();
+                        fetchList(key);
+                    } catch (er) { alert('Error: ' + er.message); console.error(er); }
+                });
+            } catch (err) { alert('Error: ' + err.message); console.error(err); }
+        }
+
+        async function deleteRecord(key, id) {
+            if (!id) return alert('ID no disponible');
+            if (!confirm('¿Eliminar registro?')) return;
+            try {
+                const res = await fetch(`${API_BASE}/${key}/Eliminar?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error(await res.text());
+                alert(await res.text());
+                fetchList(key);
+            } catch (err) { alert('Error: ' + err.message); console.error(err); }
+        }
+
+        /* ========== MANTENIMIENTOS centrales (igual que antes) ========== */
+        document.getElementById('mantenimientoSelect').addEventListener('change', e => {
+            const val = e.target.value;
+            const cont = document.getElementById('mantenimientoParams'); cont.innerHTML = '';
+            if (!val) return;
+            const knownParams = {
+                sp_InsertarPersona: ['PersonaID', 'PrimerNombre', 'SegundoNombre', 'PrimerApellido', 'SegundoApellido', 'FechaNacimiento', 'CUI', 'NIT', 'Genero', 'EstadoCivil', 'TipoLicenciaID'],
+                sp_InsertarCasa: ['ClusterID', 'CasaID', 'NumeroCasa'],
+                sp_InsertarCluster: ['ClusterID', 'NombreCluster', 'ResidencialID'],
+                sp_InsertarGuardiaSeguridad: ['GuardiaID', 'PersonaID'],
+                sp_EliminarPersonaIR: ['PersonaID_a_Eliminar']
+            };
+            const params = knownParams[val] || [];
+            params.forEach(p => { const type = p.toLowerCase().includes('fecha') ? 'date' : 'text'; cont.innerHTML += `<div class="mb-2"><label class="form-label small">${p}</label><input id="mant_${p}" class="form-control form-control-sm" type="${type}"/></div>`; });
+        });
+
+        document.getElementById('btnEjecutarMant').addEventListener('click', async () => {
+            const sp = document.getElementById('mantenimientoSelect').value;
+            if (!sp) return alert('Selecciona acción');
+            const inputs = Array.from(document.querySelectorAll('#mantenimientoParams input'));
+            const payload = {};
+            inputs.forEach(i => payload[i.id.replace('mant_', '')] = i.value || null);
+            try {
+                const res = await fetch(`${API_BASE}/Mantenimientos/Exec/${sp}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+                });
+                const txt = await res.text();
+                document.getElementById('mantenimientoResultado').innerHTML = `<div class="alert alert-success">${txt}</div>`;
+            } catch (err) {
+                document.getElementById('mantenimientoResultado').innerHTML = `<div class="alert alert-danger">Error: ${err.message}</div>`;
+                console.error(err);
+            }
+        });
+
+        /* UTIL: render tabla genérica para consultas */
+        function renderTable(data, containerId) {
+            const dest = document.getElementById(containerId);
+            if (!data || (Array.isArray(data) && data.length === 0)) { dest.innerHTML = '<div class="alert alert-warning">Sin resultados.</div>'; return; }
+            const rows = Array.isArray(data) ? data : [data];
+            const headers = Object.keys(rows[0] || {});
+            let html = '<div class="table-container"><table class="table table-sm table-striped"><thead><tr>';
+            headers.forEach(h => html += `<th>${h}</th>`);
+            html += '</tr></thead><tbody>';
+            rows.forEach(r => { html += '<tr>'; headers.forEach(h => html += `<td>${r[h] ?? ''}</td>`); html += '</tr>'; });
+            html += '</tbody></table></div>';
+            dest.innerHTML = html;
+        }
+
+        // init
+        document.getElementById('consultaPrincipalSelect').dispatchEvent(new Event('change'));
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

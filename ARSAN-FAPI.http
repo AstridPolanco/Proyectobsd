@@ -1,0 +1,6 @@
+@ARSAN_FAPI_HostAddress = http://localhost:5002
+
+GET {{ARSAN_FAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
